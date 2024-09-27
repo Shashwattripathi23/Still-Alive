@@ -7,19 +7,24 @@ import {
   Animated,
   Easing,
   Image,
+  ScrollView,
+  FlatList,
 } from "react-native";
 import { useFonts } from "expo-font";
 import { useTheme } from "./ThemeContext";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ToggleComp from "./togglecomp";
+import { LinearGradient } from "expo-linear-gradient";
+
+import { LooseEnds } from "../Data/LooseEnds";
 
 export default function Dashboard({ navigation }) {
+  const [looseEnds, setLooseEnds] = useState(LooseEnds);
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const transY = useRef(new Animated.Value(-150));
-
   useEffect(() => {
     if (isMenuOpen)
       Animated.timing(transY.current, {
@@ -55,11 +60,32 @@ export default function Dashboard({ navigation }) {
     backgroundColor: theme === "dark" ? "#111" : "#FFF",
   };
 
+  const profCardColor = theme === "dark" ? "#222" : "#31473A";
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
 
     // Toggle menu open/close
   };
+  const time = 48 + " Hr";
+  const renderItem = ({ item }) => (
+    <View style={[styles.LEItemBox,{ marginBottom: 10 ,display:"flex",}]}>
+      <Image
+        source={{ uri: item.profile }}
+        style={{ width: 50, height: 50, backgroundColor: "black" }}
+      />
+      <View>
+
+      <Text>Name: {item.name}</Text>
+      {/* <Text> */}
+        {/* Phone: {item.countryCode} {item.phone} */}
+      {/* </Text> */}
+      {/* <Text>Email: {item.email}</Text> */}
+      <Text>Relation: {item.relation}</Text>
+      {/* <Text>Affection: {item.affection}</Text> */}
+      </View>
+    </View>
+  );
 
   return (
     <View style={[styles.screen, containerStyle]}>
@@ -75,7 +101,7 @@ export default function Dashboard({ navigation }) {
                     ? "rgba(0, 0, 0, .5)"
                     : "#000"
                   : isMenuOpen
-                  ? "rgba(0, 0, 0, .2)"
+                  ? "rgba(0, 0, 0, .6)"
                   : "#FFF",
               opacity: isMenuOpen ? 1.5 : 0,
               display: isMenuOpen ? "flex" : "none",
@@ -83,12 +109,23 @@ export default function Dashboard({ navigation }) {
             },
           ]}
         ></TouchableOpacity>
+        <TouchableOpacity style={styles.whycontainer}>
+          <Text
+            style={{
+              color: "#111",
+
+              fontSize: 20,
+            }}
+          >
+            ?
+          </Text>
+        </TouchableOpacity>
         {/* <ToggleSwitch isDarkMode={theme === "dark"} onToggle={toggleTheme} /> */}
         <View style={styles.headerContainer}>
           <Text
             style={[
               styles.header1,
-              { color: theme === "dark" ? "#EEE" : "#31473A" },
+              { color: theme === "dark" ? "#EEE" : "#EEE" },
             ]}
           >
             Still Alive?
@@ -203,7 +240,7 @@ export default function Dashboard({ navigation }) {
             <Icon
               name={isMenuOpen ? "menu-open" : "menu"} // Change icon based on menu state
               size={30}
-              color={theme === "dark" ? "#EEE" : "#111"}
+              color={theme === "dark" ? "#EEE" : isMenuOpen ? "#111" : "#EEE"}
               style={{
                 position: "absolute",
                 top: 0,
@@ -215,101 +252,184 @@ export default function Dashboard({ navigation }) {
 
         <View
           style={[
-            styles.profileContainer,
+            styles.profCard,
             {
-              backgroundColor: theme === "dark" ? "#222" : "#FFF",
+              backgroundColor: theme === "dark" ? "#222" : "#31473A",
             },
           ]}
         >
           <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              //   alignSelf: "center",
-
-              borderWidth: 0.2,
-              width: "30%",
-              top: 15,
-              padding: 10,
-              //   left: 5,
-              borderRadius: 15,
-              height: 100,
-            }}
+            style={[
+              styles.profileContainer,
+              {
+                backgroundColor: theme === "dark" ? "#222" : "#FFF",
+              },
+            ]}
           >
-            <Image
-              source={
-                theme === "dark"
-                  ? require("../assets/images/Desfinalfull.png")
-                  : require("../assets/images/Designer.png")
-              }
-              style={styles.image}
+            <Icon
+              name="edit"
+              size={20}
+              color={theme === "dark" ? "#EEE" : "#111"}
+              style={{
+                position: "absolute",
+                top: 10,
+                right: 20,
+              }}
             />
-          </View>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "flex-start",
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
 
-              padding: 10,
-              borderWidth: 0.2,
-              width: "65%",
-              height: 130,
-              //   marginLeft: 10,
-              borderRadius: 15,
-            }}
-          >
-            <Text
-              style={{
-                color: theme === "dark" ? "#EEE" : "#111",
-                fontFamily: "Poppins-Regular",
-                fontSize: 13,
-                marginVertical: 5,
+                alignSelf: "center",
+
+                borderWidth: 0.2,
+                width: "37%",
+                // top: 15,
+                padding: 20,
+                //   left: 5,
+                borderRadius: 100,
+                height: 105,
               }}
             >
-              John Doe
-            </Text>
-            <Text
+              <Image
+                source={
+                  theme === "dark"
+                    ? require("../assets/images/Desfinalfull.png")
+                    : require("../assets/images/Designer.png")
+                }
+                style={styles.image}
+              />
+            </View>
+            <View
               style={{
-                color: theme === "dark" ? "#EEE" : "#111",
-                fontFamily: "Poppins-Regular",
-                fontSize: 13,
-                marginVertical: 5,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "flex-start",
+                padding: 10,
+                width: "65%",
+                height: 130,
+                borderRadius: 15,
               }}
             >
-              +234 123 456 7890
-            </Text>
-            <Text
-              style={{
-                color: theme === "dark" ? "#EEE" : "#111",
-                fontFamily: "Poppins-Regular",
-                fontSize: 13,
-                marginVertical: 5,
-                width: "100%",
-              }}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              absvsnbksl@gmail.com
-            </Text>
-            <Text
-              style={{
-                color: theme === "dark" ? "#EEE" : "#111",
-                fontFamily: "Poppins-Regular",
-                fontSize: 13,
-                marginVertical: 5,
-                width: "100%",
-              }}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              Timer: 48 hrs
-            </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginVertical: 5,
+                }}
+              >
+                {/* <Icon
+                  name="person"
+                  size={18}
+                  color={theme === "dark" ? "#EEE" : "#111"}
+                  style={{ marginRight: 8 }}
+                /> */}
+                <Text
+                  style={{
+                    color: theme === "dark" ? "#EEE" : "#111",
+                    fontSize: 22,
+                    fontWeight: "bold",
+                  }}
+                >
+                  John Doe
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginVertical: 5,
+                }}
+              >
+                <Icon
+                  name="phone"
+                  size={14}
+                  color={theme === "dark" ? "#EEE" : "#111"}
+                  style={{ marginRight: 8 }}
+                />
+                <Text
+                  style={{
+                    color: theme === "dark" ? "#EEE" : "#111",
+                    fontSize: 13,
+                  }}
+                >
+                  +234 123 456 7890
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginVertical: 5,
+                }}
+              >
+                <Icon
+                  name="email"
+                  size={14}
+                  color={theme === "dark" ? "#EEE" : "#111"}
+                  style={{ marginRight: 8 }}
+                />
+                <Text
+                  style={{
+                    color: theme === "dark" ? "#EEE" : "#111",
+                    fontSize: 13,
+                    width: "100%",
+                  }}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  JohnDoe@email.com
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginVertical: 5,
+                }}
+              >
+                <Icon
+                  name="timer"
+                  size={14}
+                  color={theme === "dark" ? "#EEE" : "#111"}
+                  style={{ marginRight: 8 }}
+                />
+                <Text
+                  style={{
+                    color: theme === "dark" ? "#EEE" : "#111",
+                    fontSize: 13,
+                    width: "100%",
+                  }}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {time}
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
+        <Text
+          style={[
+            styles.LEtext,
+            { color: theme === "dark" ? "#EEE" : "#3a3147" },
+          ]}
+        >
+          Loose ends
+        </Text>
+        <FlatList
+          data={looseEnds}
+          renderItem={renderItem}
+          // keyExtractor={(item) => item.id.toString()} // Use a unique key if available
+          style={styles.LEContainer}
+        />
       </View>
     </View>
   );
@@ -332,6 +452,20 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  whycontainer: {
+    position: "absolute",
+    top: 30,
+    right: 20,
+    zIndex: 100,
+    width: 40,
+    height: 40,
+    borderRadius: 100,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFF",
+    elevation: 15,
+  },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -343,7 +477,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: 25,
     marginRight: 10,
+    zIndex: 125,
+
     fontFamily: "DeliciousHandrawn-Regular",
+    color: "#111",
   },
   menu: {
     display: "flex",
@@ -358,7 +495,7 @@ const styles = StyleSheet.create({
   menuItem: {
     fontSize: 14,
     paddingVertical: 5,
-    fontFamily: "Inter",
+    fontFamily: "Poppins-Regular",
     // borderWidth: 1,
     width: "100%",
     borderBottomWidth: 0.2,
@@ -366,11 +503,20 @@ const styles = StyleSheet.create({
     height: 35,
     // elevation: 1,
   },
+  gradient: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+
+    flex: 1,
+  },
   menuItem2: {
     fontSize: 14,
     paddingVertical: 5,
     paddingLeft: 10,
-    fontFamily: "Inter ",
+    fontFamily: "Poppins-Regular",
     height: 35,
     // borderWidth: 1,
   },
@@ -389,17 +535,17 @@ const styles = StyleSheet.create({
 
     borderTopRightRadius: 10,
 
-    zIndex: 100,
+    zIndex: 225,
   },
   profileContainer: {
     width: "80%",
-    height: 200,
+    height: 170,
     alignSelf: "center",
     justifyContent: "space-between",
-    top: 100,
+    top: 25,
     zIndex: 55,
     backgroundColor: "white",
-    borderRadius: 15,
+    borderRadius: 40,
     // borderWidth: 1.2,
     elevation: 5,
     display: "flex",
@@ -412,4 +558,48 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  profCard: {
+    width: "100%",
+    height: 300,
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 50,
+
+    elevation: 20,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+  },
+  LEtext: {
+    // position: "absolute",
+    top: 20,
+    left: 35,
+    fontSize: 25,
+    fontWeight: "bold",
+    paddingBottom: 10,  
+    // fontFamily: "Poppins-Regular",
+  },
+  LEContainer: {
+    top: 25,
+    alignSelf: "center",
+    width: "90%",
+    height: "100%",
+    // paddingHorizontal: 20,
+    // paddingVertical: 10,
+    // borderWidth: 1,
+    marginBottom: 45,
+  },
+  LEItemBox:{
+    width: "100%",
+    paddingTop:15,
+    paddingBottom:15,
+    alignItems:"center",
+    // padding: 10,
+    borderRadius: 10,
+    backgroundColor: "#FFF",
+    elevation:1 ,
+    borderWidth:1,
+    flexDirection: "row",
+  }
 });
