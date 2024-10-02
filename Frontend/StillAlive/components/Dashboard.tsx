@@ -69,23 +69,90 @@ export default function Dashboard({ navigation }) {
   };
   const time = 48 + " Hr";
   const renderItem = ({ item }) => (
-    <View style={[styles.LEItemBox,{ marginBottom: 10 ,display:"flex",}]}>
+    <View
+      style={[
+        styles.LEItemBox,
+        {
+          marginBottom: 10,
+          display: "flex",
+          // backgroundColor: affectionColors[item.affection - 1],
+        },
+      ]}
+    >
       <Image
         source={{ uri: item.profile }}
-        style={{ width: 50, height: 50, backgroundColor: "black" }}
+        style={{
+          width: 60,
+          height: 60,
+          backgroundColor: "black",
+          borderRadius: 100,
+          marginLeft: 20,
+        }}
+        onError={(error) =>
+          console.log("Error loading image:", error.nativeEvent.error)
+        }
+        onLoad={() => console.log("Image loaded")}
       />
-      <View>
 
-      <Text>Name: {item.name}</Text>
-      {/* <Text> */}
-        {/* Phone: {item.countryCode} {item.phone} */}
-      {/* </Text> */}
-      {/* <Text>Email: {item.email}</Text> */}
-      <Text>Relation: {item.relation}</Text>
-      {/* <Text>Affection: {item.affection}</Text> */}
+      <View style={{ marginLeft: 10 }}>
+        <Text
+          style={{
+            fontSize: 20,
+            // fontWeight: "bold",
+
+            color: theme === "dark" ? "#EEE" : "#111",
+          }}
+        >
+          {item.name}
+        </Text>
+
+        <Text
+          style={{
+            fontSize: 15,
+            color: theme === "dark" ? "#EEE" : "#111",
+          }}
+        >
+          {item.relation}
+        </Text>
+        {/* <Text>{item.affection}</Text> */}
       </View>
+      <Icon
+      name="arrow-forward-ios"
+      size={20}
+      color={theme === "dark" ? "#EEE" : "#111"}
+      style={{
+        position: "absolute",
+        alignItems: "center",
+        alignSelf: "center",
+        right: 20,
+      }}
+    />
+      <View
+      style={{
+        position:"absolute",
+        width:10,
+        height: 100, 
+        left: 0,
+       
+        // top: 10,
+        backgroundColor: affectionColors[item.affection - 1],
+      }}
+      ></View>
     </View>
   );
+
+  const affectionColors = [
+    "#E53935", // 1. Softened Red: Least affectionate (Hate)
+    "#F4511E", // 2. Softened Reddish Orange
+    "#FB8C00", // 3. Softened Orange
+    "#FFCA28", // 4. Softened Amber
+    "#FFEB3B", // 5. Soft Yellow
+    "#FFF176", // 6. Soft Pale Yellow
+    "#D4E157", // 7. Softened Lime Green
+    "#AED581", // 8. Soft Light Green
+    "#8BC34A", // 9. Softened Green
+    "#66BB6A", // 10. Soft Green: Most affectionate (Love)
+  ];
 
   return (
     <View style={[styles.screen, containerStyle]}>
@@ -416,14 +483,47 @@ export default function Dashboard({ navigation }) {
             </View>
           </View>
         </View>
-        <Text
-          style={[
-            styles.LEtext,
-            { color: theme === "dark" ? "#EEE" : "#3a3147" },
-          ]}
+        <View
+          style={{
+            top: 20,
+            width: "100%",
+            height: "auto",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingHorizontal: 20,
+            // borderWidth: 1,
+            // position: "absolute",
+
+            // backgroundColor: theme === "dark" ? "#222" : "#31473A",
+          }}
         >
-          Loose ends
-        </Text>
+          <Text
+            style={[
+              styles.LEtext,
+              { color: theme === "dark" ? "#EEE" : "#111" },
+            ]}
+          >
+            Loose ends ({looseEnds.length}/10)
+          </Text>
+          <TouchableOpacity
+            style={[
+              styles.addcontainer,
+              { backgroundColor: theme === "dark" ? "#222" : "#31473A" },
+            ]}
+          >
+            <Text
+              style={{
+                color: theme === "light" ? "#EEE" : "#111",
+
+                fontSize: 20,
+              }}
+            >
+              Add
+            </Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           data={looseEnds}
           renderItem={renderItem}
@@ -465,6 +565,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFF",
     elevation: 15,
+  },
+  addcontainer: {
+    // position: "absolute",
+    // top: 30,
+    // right: 20,
+    zIndex: 100,
+    width: 100,
+    height: 45,
+    borderRadius: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFF",
+    elevation: 25,
   },
   headerContainer: {
     flexDirection: "row",
@@ -547,7 +661,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 40,
     // borderWidth: 1.2,
-    elevation: 5,
+    elevation: 25,
     display: "flex",
     flexDirection: "row",
     paddingVertical: 20,
@@ -573,33 +687,41 @@ const styles = StyleSheet.create({
   },
   LEtext: {
     // position: "absolute",
-    top: 20,
-    left: 35,
+    // top: 20,
+    // left: 35,
     fontSize: 25,
     fontWeight: "bold",
-    paddingBottom: 10,  
+    paddingBottom: 10,
     // fontFamily: "Poppins-Regular",
   },
   LEContainer: {
-    top: 25,
+    top: 35,
     alignSelf: "center",
-    width: "90%",
+    width: "100%",
     height: "100%",
+    paddingHorizontal: 20,
     // paddingHorizontal: 20,
     // paddingVertical: 10,
     // borderWidth: 1,
+    borderWidth: 0.1,
     marginBottom: 45,
   },
-  LEItemBox:{
+  LEItemBox: {
     width: "100%",
-    paddingTop:15,
-    paddingBottom:15,
-    alignItems:"center",
+    paddingTop: 15,
+    paddingBottom: 15,
+    alignItems: "center",
     // padding: 10,
     borderRadius: 10,
-    backgroundColor: "#FFF",
-    elevation:1 ,
-    borderWidth:1,
+    backgroundColor: "rgb(238,238,238)",
+    elevation: 2,
+    // borderWidth: 0.1,
     flexDirection: "row",
-  }
+    overflow: "hidden",
+    borderTopStartRadius: 10,
+    
+
+   
+    height: 80,
+  },
 });
