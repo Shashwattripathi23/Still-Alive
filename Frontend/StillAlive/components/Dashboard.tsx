@@ -50,6 +50,8 @@ export default function Dashboard({ navigation }) {
   const [fontsLoaded] = useFonts({
     "DeliciousHandrawn-Regular": require("../assets/fonts/DeliciousHandrawn-Regular.ttf"),
     "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
+    "Inter-Regular": require("../assets/fonts/InterN.ttf"),
+ 
   });
 
   if (!fontsLoaded) {
@@ -60,7 +62,7 @@ export default function Dashboard({ navigation }) {
     backgroundColor: theme === "dark" ? "#111" : "#FFF",
   };
 
-  const profCardColor = theme === "dark" ? "#222" : "#31473A";
+  const profCardColor = theme === "dark" ? "#31473A" : "#31473A";
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -87,6 +89,7 @@ export default function Dashboard({ navigation }) {
           backgroundColor: "black",
           borderRadius: 100,
           marginLeft: 20,
+          borderWidth: 1,
         }}
         onError={(error) =>
           console.log("Error loading image:", error.nativeEvent.error)
@@ -99,8 +102,10 @@ export default function Dashboard({ navigation }) {
           style={{
             fontSize: 20,
             // fontWeight: "bold",
+            fontFamily: "Inter-Regular",
 
             color: theme === "dark" ? "#EEE" : "#111",
+
           }}
         >
           {item.name}
@@ -110,6 +115,7 @@ export default function Dashboard({ navigation }) {
           style={{
             fontSize: 15,
             color: theme === "dark" ? "#EEE" : "#111",
+            fontFamily: "Inter-Regular",
           }}
         >
           {item.relation}
@@ -117,42 +123,45 @@ export default function Dashboard({ navigation }) {
         {/* <Text>{item.affection}</Text> */}
       </View>
       <Icon
-      name="arrow-forward-ios"
-      size={20}
-      color={theme === "dark" ? "#EEE" : "#111"}
-      style={{
-        position: "absolute",
-        alignItems: "center",
-        alignSelf: "center",
-        right: 20,
-      }}
-    />
+        name="arrow-forward-ios"
+        size={20}
+        color={theme === "dark" ? "#EEE" : "#111"}
+        style={{
+          position: "absolute",
+          alignItems: "center",
+          alignSelf: "center",
+          right: 20,
+        }}
+      />
       <View
-      style={{
-        position:"absolute",
-        width:10,
-        height: 100, 
-        left: 0,
-       
-        // top: 10,
-        backgroundColor: affectionColors[item.affection - 1],
-      }}
+        style={{
+          position: "absolute",
+          width: 9,
+          height: 100,
+          left: 0,
+
+          // top: 10,
+          backgroundColor: affectionColors[item.affection - 1],
+        }}
       ></View>
     </View>
   );
 
   const affectionColors = [
-    "#E53935", // 1. Softened Red: Least affectionate (Hate)
-    "#F4511E", // 2. Softened Reddish Orange
-    "#FB8C00", // 3. Softened Orange
-    "#FFCA28", // 4. Softened Amber
-    "#FFEB3B", // 5. Soft Yellow
-    "#FFF176", // 6. Soft Pale Yellow
-    "#D4E157", // 7. Softened Lime Green
-    "#AED581", // 8. Soft Light Green
-    "#8BC34A", // 9. Softened Green
-    "#66BB6A", // 10. Soft Green: Most affectionate (Love)
+    "#A5D6A7", // 1. Light Mint Green: Least affectionate
+    "#81C784", // 2. Soft Greenish Lime
+    "#66BB6A", // 3. Muted Light Green
+    "#4CAF50", // 4. Soft Medium Green
+    "#43A047", // 5. Muted Fresh Green
+    "#388E3C", // 6. Soft Rich Green
+    "#2E7D32", // 7. Deeper Green
+    "#1D6F38", // 8. Balanced Forest Green
+    "#24694A", // 9. Soft Deep Green
+    "#2E7B70", // 10. Balanced Dark Teal Green: Most affectionate
   ];
+  
+
+  
 
   return (
     <View style={[styles.screen, containerStyle]}>
@@ -251,7 +260,7 @@ export default function Dashboard({ navigation }) {
                 { color: theme === "dark" ? "#EEE" : "#111" },
               ]}
             >
-              Privacy Policy
+              Privacy Policies
             </Text>
             <Text
               style={[
@@ -321,7 +330,7 @@ export default function Dashboard({ navigation }) {
           style={[
             styles.profCard,
             {
-              backgroundColor: theme === "dark" ? "#222" : "#31473A",
+              backgroundColor: theme === "dark" ? "#31473A" : "#31473A",
             },
           ]}
         >
@@ -352,7 +361,7 @@ export default function Dashboard({ navigation }) {
 
                 alignSelf: "center",
 
-                borderWidth: 0.2,
+                borderWidth: 0.7,
                 width: "37%",
                 // top: 15,
                 padding: 20,
@@ -400,6 +409,7 @@ export default function Dashboard({ navigation }) {
                     color: theme === "dark" ? "#EEE" : "#111",
                     fontSize: 22,
                     fontWeight: "bold",
+                    fontFamily: "Inter-Regular",
                   }}
                 >
                   John Doe
@@ -423,6 +433,7 @@ export default function Dashboard({ navigation }) {
                   style={{
                     color: theme === "dark" ? "#EEE" : "#111",
                     fontSize: 13,
+                    fontFamily: "Inter-Regular",
                   }}
                 >
                   +234 123 456 7890
@@ -447,6 +458,7 @@ export default function Dashboard({ navigation }) {
                     color: theme === "dark" ? "#EEE" : "#111",
                     fontSize: 13,
                     width: "100%",
+                    fontFamily: "Inter-Regular",
                   }}
                   numberOfLines={1}
                   ellipsizeMode="tail"
@@ -473,6 +485,7 @@ export default function Dashboard({ navigation }) {
                     color: theme === "dark" ? "#EEE" : "#111",
                     fontSize: 13,
                     width: "100%",
+                    fontFamily: "Inter-Regular",
                   }}
                   numberOfLines={1}
                   ellipsizeMode="tail"
@@ -510,14 +523,18 @@ export default function Dashboard({ navigation }) {
           <TouchableOpacity
             style={[
               styles.addcontainer,
-              { backgroundColor: theme === "dark" ? "#222" : "#31473A" },
+              { backgroundColor: "white" ,
+                borderWidth: 2.2, 
+                borderColor: "#31473A",
+              },
             ]}
           >
             <Text
               style={{
-                color: theme === "light" ? "#EEE" : "#111",
+                color: theme === "dark" ? "#EEE" : "#31473A",
 
                 fontSize: 20,
+                fontFamily: "Inter-Regular",
               }}
             >
               Add
@@ -570,7 +587,7 @@ const styles = StyleSheet.create({
     // position: "absolute",
     // top: 30,
     // right: 20,
-    zIndex: 100,
+    zIndex: 50,
     width: 100,
     height: 45,
     borderRadius: 20,
@@ -594,6 +611,7 @@ const styles = StyleSheet.create({
     zIndex: 125,
 
     fontFamily: "DeliciousHandrawn-Regular",
+    // fontFamily: "Inter-Regular",
     color: "#111",
   },
   menu: {
@@ -609,7 +627,7 @@ const styles = StyleSheet.create({
   menuItem: {
     fontSize: 14,
     paddingVertical: 5,
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Inter-Regular",
     // borderWidth: 1,
     width: "100%",
     borderBottomWidth: 0.2,
@@ -630,7 +648,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingVertical: 5,
     paddingLeft: 10,
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Inter-Regular",
     height: 35,
     // borderWidth: 1,
   },
@@ -689,10 +707,11 @@ const styles = StyleSheet.create({
     // position: "absolute",
     // top: 20,
     // left: 35,
-    fontSize: 25,
-    fontWeight: "bold",
+    fontSize: 23,
+    // fontWeight: "bold",
     paddingBottom: 10,
     // fontFamily: "Poppins-Regular",
+    fontFamily: "Inter-Regular",
   },
   LEContainer: {
     top: 35,
@@ -719,9 +738,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     overflow: "hidden",
     borderTopStartRadius: 10,
-    
 
-   
     height: 80,
   },
 });
