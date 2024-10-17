@@ -268,7 +268,7 @@ export default function Dashboard({ navigation }) {
                 { color: theme === "dark" ? "#EEE" : "#111" },
               ]}
             >
-              Terms of Service
+              Terms of Services
             </Text>
             <View
               style={{
