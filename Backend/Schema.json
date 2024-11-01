@@ -1,0 +1,53 @@
+{
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "password": "",
+    "phone": "",
+    "dateOfBirth": "",
+    "gender": "",
+    "profilePicture": "",
+    "timer": "",
+    "lastActive": "",
+    "followUp": {
+        "check1": true,
+        "check2": true,
+        "followUpLast": false,
+        "contact": {
+            "active": true,
+            "firstName": "",
+            "lastName": "",
+            "relation": "",
+            "phone": "",
+            "email": ""
+        },
+        "followResponse": true
+    },
+    "looseEnds": [
+        {
+            "firstName": "",
+            "lastName": "",
+            "email": "",
+            "phone": "",
+            "gender": "",
+            "relation": "",
+            "affection": 0,
+            "links": [
+                {
+                    "link": "",
+                    "description": ""
+                }
+            ],
+            "messages": ""
+        }
+    ],
+    "isAlive": true,
+    "instagram": {
+        "photos": [],
+        "caption": ""
+    },
+    "lastAffairs":true,
+    "lastNotifify": ""
+
+
+}
