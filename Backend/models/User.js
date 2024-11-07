@@ -22,6 +22,10 @@ const contactSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phoneCode: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true,
@@ -48,8 +52,8 @@ const followUpSchema = new mongoose.Schema({
     type: contactSchema,
     required: true,
   },
-  followUpRespone: {
-    tupe: Boolean,
+  followUpResponse: {
+    type: Boolean,
     required: true,
     default: false,
   },
@@ -83,6 +87,10 @@ const looseEndSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phoneCode: {
+    type: String,
+    required: true
+  },
   relation: {
     type: String,
     required: true,
@@ -92,7 +100,7 @@ const looseEndSchema = new mongoose.Schema({
     required: true,
   },
   affection: {
-    type: int,
+    type: Number,
     required: true,
   },
   links: {
@@ -142,57 +150,57 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true,
+    required: false,
   },
   phoneCode: {
     type: String,
-    required: true,
+    required: false,
   },
   dateOfBirth: {
-    type: String,
-    required: true,
+    type: Date,
+    required: false,
   },
   gender: {
     type: String,
-    required: true,
+    required: false,
   },
   profilePicture: {
     type: String,
-    required: true,
+    required: false,
   },
   timer: {
     type: String,
-    required: true,
+    required: false,
   },
   lastActive: {
-    type: String,
-    required: true,
+    type: Date,
+    required: false,
   },
   followUp: {
     type: followUpSchema,
-    required: true,
+    required: false,
   },
   looseEnd: {
     type: [looseEndSchema],
-    required: true,
+    required: false,
   },
   isAlive: {
     type: Boolean,
-    required: true,
+    required: false,
     default: true,
   },
   instagram: {
     type: instagramSchema,
-    required: true,
+    required: false,
   },
   lastAffair: {
     type: Boolean,
-    required: true,
+    required: false,
     default: false,
   },
   lastNotify: {
-    type: String,
-    required: true,
+    type: Date,
+    required: false,
   },
 });
 

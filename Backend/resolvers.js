@@ -11,6 +11,11 @@ const resolvers = {
       if (!user) throw new Error("User not found");
       return user.password;
     },
+    getUserInfo: async (_, { email }) => {
+      const user = await User.findOne({ email });
+      if (!user) throw new Error("User not found");
+      return user;
+    },
   },
 
   Mutation: {
@@ -27,11 +32,32 @@ const resolvers = {
       return { token };
     },
 
-    register: async (_, { email, password }) => {
+    register: async (
+      _,
+      { email, password, confirmPass, firstName, lastName }
+    ) => {
+      const passCheck = password.localeCompare(confirmPass);
+      if (passCheck !== 0) throw new Error("Passwords do not match");
       const hashedPassword = await bcrypt.hash(password, 12);
-      const newUser = new User({ email, password: hashedPassword });
+      const newUser = new User({
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+      });
       await newUser.save();
       return "User registered successfully";
+    },
+
+    editUserInfo: async (_, { UserInfo }) => {
+      const user = await User.findOne({ email: UserInfo.email });
+      if (!user) throw new Error("User not found");
+      Object.keys(UserInfo).forEach((key) => {
+        if (key !== "email") user[key] = UserInfo[key];
+      });
+
+      await user.save();
+      return user;
     },
   },
 };
