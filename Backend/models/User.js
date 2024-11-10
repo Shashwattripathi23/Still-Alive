@@ -24,7 +24,7 @@ const contactSchema = new mongoose.Schema({
   },
   phoneCode: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
@@ -89,7 +89,7 @@ const looseEndSchema = new mongoose.Schema({
   },
   phoneCode: {
     type: String,
-    required: true
+    required: true,
   },
   relation: {
     type: String,
