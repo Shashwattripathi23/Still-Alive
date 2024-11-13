@@ -1,12 +1,12 @@
 const { extendSchemaImpl } = require("graphql/utilities/extendSchema");
 const mongoose = require("mongoose");
 
-const postSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
   id: {
     type: String,
     required: true,
   },
-  title: {
+  postId: {
     type: String,
     required: true,
   },
@@ -22,10 +22,6 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  questionId: {
-    type: String,
-    required: false,
-  },
 });
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = mongoose.model("Comment", commentSchema);
