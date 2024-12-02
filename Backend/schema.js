@@ -7,6 +7,11 @@ const typeDefs = gql`
     hello: String
     password(email: String!): String
     getUserInfo(email: String!): UserInfo
+    getPost(email: String!): [Post]
+    getPosts: [Post]
+    getComments(postId: String!): [Comment]
+    getQuestions: [questionSchema]
+    getQuesPost(questionId: String!): [Post]
   }
 
   type Mutation {
@@ -19,6 +24,11 @@ const typeDefs = gql`
       lastName: String!
     ): String
     editUserInfo(UserInfo: UserInfoInput!): UserInfo
+    addPost(postInput: PostInput): Post
+    addComment(commentInput: CommentInput): Comment
+    deletePost(id: ID!): String
+    deleteComment(id: ID!): String
+    addQuestion(content: String!, email: String!): questionSchema
   }
 
   type AuthPayload {
@@ -139,6 +149,40 @@ const typeDefs = gql`
   input instaSchemaInput {
     photos: [instaLinkSchemaInput]
     caption: String
+  }
+
+  type Post {
+    id: ID!
+    title: String!
+    body: String!
+    email: String!
+    date: Date!
+    questionId: String
+  }
+
+  input PostInput {
+    title: String!
+    body: String!
+    email: String!
+    questionId: String
+  }
+  type Comment {
+    id: ID!
+    postId: ID!
+    body: String!
+    email: String!
+    date: Date!
+  }
+  input CommentInput {
+    postId: ID!
+    body: String!
+    email: String!
+  }
+  type questionSchema {
+    id: String!
+    content: String!
+    date: Date!
+    email: String!
   }
 `;
 
